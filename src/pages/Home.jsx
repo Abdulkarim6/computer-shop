@@ -1,24 +1,45 @@
-import { useEffect, useState } from "react";
+import ProductCart from "../components/ProductCart";
+import { useProducts } from "../context/ProductProvider";
+import useHook from "../useHook";
 
 const Home = () => {
-    const [data, setData] = useState([]);
+  // const {state} = useProducts();
+  // console.log(state.products);
 
-    console.log(data);
+  const {
+    state: { products, loading, error },
+  } = useProducts();
 
-    useEffect(() => {
-        fetch('products.json')
-        .then(res => res.json())
-        .then(data => setData(data))
-    },[])
+  let content;
+  let info;
 
+  if (loading && !error) {
+    info = (
+      <div className="flex items-center justify-center mt-5">
+        <p className="text-xl font-semibold text-blue-500">Loading</p>
+        <span className="loading loading-spinner text-info"></span>
+      </div>
+    );
+  } else if (error) {
+    info = <p className="text-center text-xl font-semibold text-red-500 mt-5">Something went wrong</p>;
+  } else if (!loading && !products.length && !error) {
+    info = <p className="text-center text-xl font-semibold text-green-500 mt-5">Nothing to show, Products list empty</p>;
+  } else if (!loading && products.length && !error) {
+    content = products?.map((product, i) => (
+      <ProductCart key={i} product={product}></ProductCart>
+    ));
+  }
+
+  const [inf, conten] = useHook();
+  console.log("inf",inf,'conten', conten);
 
   return (
-    <div>
-      <button className="btn btn-info">Info</button>
-      <button className="btn btn-success">Success</button>
-      <button className="btn btn-warning">Warning</button>
-      <button className="btn btn-error">Error</button>
-    </div>
+    <section>
+      {info}
+      <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center">
+        {content}
+      </div>
+    </section>
   );
 };
 
