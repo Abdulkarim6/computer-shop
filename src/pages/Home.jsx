@@ -1,6 +1,5 @@
 import ProductCart from "../components/ProductCart";
 import { useProducts } from "../context/ProductProvider";
-import useHook from "../useHook";
 
 const Home = () => {
   // const {state} = useProducts();
@@ -30,13 +29,10 @@ const Home = () => {
     ));
   }
 
-  const [inf, conten] = useHook();
-  console.log("inf",inf,'conten', conten);
-
   return (
     <section>
       {info}
-      <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 justify-items-center">
         {content}
       </div>
     </section>

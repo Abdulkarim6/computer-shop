@@ -4,10 +4,11 @@ export const initialState = {
   loading: false,
   products: [],
   error: false,
+  cart: [],
 };
 
 export const productReducer = (state, action) => {
-//   console.log(state);
+  console.log(state.cart);
   switch (action.type) {
     case actionTypes.FETCHING_START:
       return {
@@ -27,6 +28,16 @@ export const productReducer = (state, action) => {
         ...state,
         loading: false,
         error: true,
+      };
+    case actionTypes.ADD_TO_CART:
+      return {
+        ...state,
+        cart: [...state.cart, action.payload],
+      };
+    case "REMOVE_TO_CART":
+      return {
+        ...state,
+        cart: [...state.cart, action.payload],
       };
 
     default:
